@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { listenLinks, site } from "@/lib/site";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
@@ -41,27 +41,6 @@ export default function AboutPage() {
             {site.host.bio}
           </p>
         </div>
-      </div>
-
-      <h2 className="mt-12 font-serif text-2xl font-semibold">
-        Listen &amp; join
-      </h2>
-      <div className="mt-4 flex flex-wrap gap-3">
-        <a
-          href={site.links.patreon}
-          className="rounded-lg bg-cinnabar px-5 py-3 text-sm font-medium text-white transition-colors hover:opacity-90"
-        >
-          Join the membership
-        </a>
-        {listenLinks.map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            className="rounded-lg border border-line bg-surface px-5 py-3 text-sm font-medium transition-colors hover:border-jade"
-          >
-            {link.label}
-          </a>
-        ))}
       </div>
     </div>
   );
