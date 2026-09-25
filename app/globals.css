@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f8f6f1;
+  --surface: #ffffff;
+  --ink: #1c2421;
+  --muted: #5b6661;
+  --line: #e3dfd5;
+  --jade: #1f5c4d;
+  --jade-dark: #174538;
+  --jade-soft: #e6efeb;
+  --cinnabar: #b5412c;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-jade: var(--jade);
+  --color-jade-dark: var(--jade-dark);
+  --color-jade-soft: var(--jade-soft);
+  --color-cinnabar: var(--cinnabar);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-source-serif);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
