@@ -20,7 +20,7 @@ function uploadsPlaylistId(channelId: string) {
   return channelId.startsWith("UC") ? `UU${channelId.slice(2)}` : channelId;
 }
 
-async function fetchAllPlaylistItems(useCache: boolean): Promise<PlaylistItem[]> {
+async function fetchAllPlaylistItems(): Promise<PlaylistItem[]> {
   if (!API_KEY) throw new Error("YOUTUBE_API_KEY is not set");
 
   const playlistId = uploadsPlaylistId(CHANNEL_ID);
@@ -35,10 +35,7 @@ async function fetchAllPlaylistItems(useCache: boolean): Promise<PlaylistItem[]>
     url.searchParams.set("key", API_KEY);
     if (pageToken) url.searchParams.set("pageToken", pageToken);
 
-    const response = await fetch(
-      url,
-      useCache ? { next: { revalidate: 3600 } } : { cache: "no-store" },
-    );
+    const response = await fetch(url, { next: { revalidate: 3600 } });
 
     if (!response.ok) {
       const body = await response.text();
@@ -71,7 +68,7 @@ export async function getYoutubeVideosByEpisode(): Promise<Map<number, string>> 
   const map = new Map<number, string>();
 
   try {
-    const items = await fetchAllPlaylistItems(true);
+    const items = await fetchAllPlaylistItems();
     for (const { title, videoId } of items) {
       const number = matchEpisodeNumber(title);
       if (number !== null && !map.has(number)) {
@@ -83,32 +80,4 @@ export async function getYoutubeVideosByEpisode(): Promise<Map<number, string>> 
   }
 
   return map;
-}
-
-export async function getYoutubeDebugInfo() {
-  if (!API_KEY) {
-    return { hasApiKey: false, error: "YOUTUBE_API_KEY is not set in this environment" };
-  }
-
-  try {
-    const items = await fetchAllPlaylistItems(false);
-    const matched = items
-      .map(({ title, videoId }) => ({ title, videoId, episode: matchEpisodeNumber(title) }))
-      .filter((item) => item.episode !== null);
-
-    return {
-      hasApiKey: true,
-      playlistId: uploadsPlaylistId(CHANNEL_ID),
-      totalVideosFetched: items.length,
-      matchedEpisodeCount: matched.length,
-      sampleTitles: items.slice(0, 5).map((item) => item.title),
-      matchedEpisodes: matched,
-    };
-  } catch (error) {
-    return {
-      hasApiKey: true,
-      playlistId: uploadsPlaylistId(CHANNEL_ID),
-      error: error instanceof Error ? error.message : String(error),
-    };
-  }
 }
