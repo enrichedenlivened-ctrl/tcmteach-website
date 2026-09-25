@@ -32,7 +32,9 @@ function stripHtml(value: string) {
 // Key Topics heading -> list" structure. Keep only the text between the
 // Summary and Key Topics headings.
 function cleanSummary(rawSummary: string) {
-  const text = stripHtml(rawSummary);
+  // Normalize whitespace (including non-breaking spaces from rich-text show
+  // notes) so heading matches aren't thrown off by odd spacing/line breaks.
+  const text = stripHtml(rawSummary).replace(/\s+/g, " ").trim();
 
   const summaryHeading = text.match(/summary\s*:?/i);
   const start = summaryHeading?.index !== undefined
@@ -40,7 +42,7 @@ function cleanSummary(rawSummary: string) {
     : 0;
 
   const rest = text.slice(start);
-  const keyTopicsHeading = rest.match(/key topics/i);
+  const keyTopicsHeading = rest.match(/key\s*topics/i);
   const end = keyTopicsHeading?.index ?? rest.length;
 
   return rest.slice(0, end).trim().slice(0, 400);
