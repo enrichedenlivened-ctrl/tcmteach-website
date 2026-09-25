@@ -6,7 +6,7 @@ export const site = {
   host: {
     name: "Matthew Sabey Smith",
     credentials: "DACM, MSOM, Dipl.Ac., LAc.",
-    bio: "Matthew Sabey Smith is a practitioner, professor, and business entrepreneur in Traditional Chinese Medicine. He teaches at the Phoenix Institute of Herbal Medicine and Acupuncture and works as an educator, coach, and speaker for acupuncturists and herbalists building their own practices.",
+    bio: "Matthew Sabey Smith is a practitioner and business entrepreneur in Traditional Chinese Medicine, working as an educator, coach, and speaker for acupuncturists and herbalists building their own practices.",
   },
   links: {
     patreon: "https://www.patreon.com/cw/theTCMTeach/membership",
