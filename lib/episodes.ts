@@ -7,6 +7,7 @@ export type Episode = {
   durationMinutes?: number;
   topics: string[];
   audioUrl?: string;
+  youtubeUrl?: string;
 };
 
 // Used only when PODCAST_RSS_URL isn't set, or the live feed can't be reached.

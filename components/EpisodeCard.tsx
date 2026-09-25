@@ -47,12 +47,22 @@ export default function EpisodeCard({ episode }: { episode: Episode }) {
           ))}
         </ul>
       )}
-      <a
-        href={episode.audioUrl ?? site.links.libsyn}
-        className="mt-4 inline-block text-sm font-medium text-jade hover:text-jade-dark"
-      >
-        Listen to this episode →
-      </a>
+      <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+        <a
+          href={episode.audioUrl ?? site.links.libsyn}
+          className="text-sm font-medium text-jade hover:text-jade-dark"
+        >
+          Listen to this episode →
+        </a>
+        {episode.youtubeUrl && (
+          <a
+            href={episode.youtubeUrl}
+            className="text-sm font-medium text-cinnabar hover:opacity-80"
+          >
+            Watch on YouTube →
+          </a>
+        )}
+      </div>
     </article>
   );
 }

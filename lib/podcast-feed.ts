@@ -1,4 +1,5 @@
 import { type Episode, fallbackEpisodes } from "@/lib/episodes";
+import { getYoutubeVideosByEpisode } from "@/lib/youtube";
 
 const FEED_URL = process.env.PODCAST_RSS_URL;
 
@@ -92,7 +93,16 @@ function parseFeed(xml: string): Episode[] {
     });
 }
 
-export async function getEpisodes(): Promise<{ episodes: Episode[]; isLive: boolean }> {
+function withYoutubeLinks(episodes: Episode[], youtubeByEpisode: Map<number, string>) {
+  if (youtubeByEpisode.size === 0) return episodes;
+
+  return episodes.map((episode) => {
+    const youtubeUrl = youtubeByEpisode.get(episode.number);
+    return youtubeUrl ? { ...episode, youtubeUrl } : episode;
+  });
+}
+
+async function fetchPodcastFeed(): Promise<{ episodes: Episode[]; isLive: boolean }> {
   if (!FEED_URL) {
     return { episodes: fallbackEpisodes, isLive: false };
   }
@@ -115,4 +125,13 @@ export async function getEpisodes(): Promise<{ episodes: Episode[]; isLive: bool
     console.error("Failed to load podcast RSS feed, using fallback episodes:", error);
     return { episodes: fallbackEpisodes, isLive: false };
   }
+}
+
+export async function getEpisodes(): Promise<{ episodes: Episode[]; isLive: boolean }> {
+  const [{ episodes, isLive }, youtubeByEpisode] = await Promise.all([
+    fetchPodcastFeed(),
+    getYoutubeVideosByEpisode(),
+  ]);
+
+  return { episodes: withYoutubeLinks(episodes, youtubeByEpisode), isLive };
 }
