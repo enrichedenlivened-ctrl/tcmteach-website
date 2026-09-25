@@ -28,22 +28,22 @@ function stripHtml(value: string) {
   return value.replace(/<[^>]+>/g, "").trim();
 }
 
-// Show notes often end with boilerplate (a "Key Topics" list, a Patreon
-// plug, etc.) after the actual summary — cut everything from whichever of
-// those comes first so only the descriptive summary is shown.
+// Show notes follow a "Patreon plug -> Summary heading -> summary text ->
+// Key Topics heading -> list" structure. Keep only the text between the
+// Summary and Key Topics headings.
 function cleanSummary(rawSummary: string) {
   const text = stripHtml(rawSummary);
-  const boilerplateMarkers = [/key topics/i, /patreon/i];
 
-  let cutIndex = text.length;
-  for (const marker of boilerplateMarkers) {
-    const match = text.match(marker);
-    if (match?.index !== undefined && match.index < cutIndex) {
-      cutIndex = match.index;
-    }
-  }
+  const summaryHeading = text.match(/summary\s*:?/i);
+  const start = summaryHeading?.index !== undefined
+    ? summaryHeading.index + summaryHeading[0].length
+    : 0;
 
-  return text.slice(0, cutIndex).trim().slice(0, 400);
+  const rest = text.slice(start);
+  const keyTopicsHeading = rest.match(/key topics/i);
+  const end = keyTopicsHeading?.index ?? rest.length;
+
+  return rest.slice(0, end).trim().slice(0, 400);
 }
 
 function parseDurationToMinutes(raw: string | undefined) {
