@@ -28,6 +28,24 @@ function stripHtml(value: string) {
   return value.replace(/<[^>]+>/g, "").trim();
 }
 
+// Show notes often end with boilerplate (a "Key Topics" list, a Patreon
+// plug, etc.) after the actual summary — cut everything from whichever of
+// those comes first so only the descriptive summary is shown.
+function cleanSummary(rawSummary: string) {
+  const text = stripHtml(rawSummary);
+  const boilerplateMarkers = [/key topics/i, /patreon/i];
+
+  let cutIndex = text.length;
+  for (const marker of boilerplateMarkers) {
+    const match = text.match(marker);
+    if (match?.index !== undefined && match.index < cutIndex) {
+      cutIndex = match.index;
+    }
+  }
+
+  return text.slice(0, cutIndex).trim().slice(0, 400);
+}
+
 function parseDurationToMinutes(raw: string | undefined) {
   if (!raw) return undefined;
   const parts = raw.split(":").map(Number);
@@ -77,10 +95,9 @@ function parseFeed(xml: string): Episode[] {
                 .replace(/[^a-z0-9]+/g, "-")
                 .replace(/(^-|-$)/g, ""),
         title: title.replace(/^episode\s+\d+:\s*/i, ""),
-        summary: stripHtml(summarySource).slice(0, 400),
+        summary: cleanSummary(summarySource),
         publishedAt: toIsoDate(pubDate),
         durationMinutes: parseDurationToMinutes(tag(item, "itunes:duration")),
-        topics: [],
         audioUrl,
       };
     })

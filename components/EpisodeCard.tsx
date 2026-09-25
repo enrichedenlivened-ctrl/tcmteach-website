@@ -29,18 +29,6 @@ export default function EpisodeCard({ episode }: { episode: Episode }) {
       {episode.summary && (
         <p className="mt-2 leading-relaxed text-muted">{episode.summary}</p>
       )}
-      {episode.topics.length > 0 && (
-        <ul className="mt-4 flex flex-wrap gap-2">
-          {episode.topics.map((topic) => (
-            <li
-              key={topic}
-              className="rounded-full bg-jade-soft px-2.5 py-0.5 text-xs font-medium text-jade-dark"
-            >
-              {topic}
-            </li>
-          ))}
-        </ul>
-      )}
       {videoId && (
         <div className="mt-4">
           <YoutubeEmbed videoId={videoId} title={episode.title} />
