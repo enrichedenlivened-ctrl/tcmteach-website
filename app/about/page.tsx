@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { listenLinks, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "About The TCM Teach Podcast.",
+  description: `About ${site.name}.`,
 };
 
 export default function AboutPage() {
@@ -13,16 +14,47 @@ export default function AboutPage() {
       </h1>
       <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted">
         <p>
-          The TCM Teach Podcast is made for acupuncturists and Traditional
-          Chinese Medicine practitioners who want to keep learning after
-          graduation.
+          {site.name} helps acupuncturists and Chinese medicine herbalists
+          build thriving, sustainable businesses. With {site.episodeCount}+
+          episodes, the show covers what practitioners actually need to grow a
+          practice: marketing, patient attraction, pricing, legal and business
+          structure, branding, and storytelling.
         </p>
         <p>
-          Episodes focus on what matters in the treatment room: diagnostic
-          skill, technique, classical theory applied to real cases, and the
-          practical side of building a practice.
+          Members get deeper resources and community through the TCM Teach
+          membership on Patreon.
         </p>
-        {/* TODO: add host bio, contact details, and listening links */}
+      </div>
+
+      <h2 className="mt-12 font-serif text-2xl font-semibold">
+        {site.host.name}
+      </h2>
+      <p className="mt-1 text-sm font-medium uppercase tracking-wide text-cinnabar">
+        {site.host.credentials}
+      </p>
+      <p className="mt-4 text-lg leading-relaxed text-muted">
+        {site.host.bio}
+      </p>
+
+      <h2 className="mt-12 font-serif text-2xl font-semibold">
+        Listen &amp; join
+      </h2>
+      <div className="mt-4 flex flex-wrap gap-3">
+        <a
+          href={site.links.patreon}
+          className="rounded-lg bg-cinnabar px-5 py-3 text-sm font-medium text-white transition-colors hover:opacity-90"
+        >
+          Join the membership
+        </a>
+        {listenLinks.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            className="rounded-lg border border-line bg-surface px-5 py-3 text-sm font-medium transition-colors hover:border-jade"
+          >
+            {link.label}
+          </a>
+        ))}
       </div>
     </div>
   );

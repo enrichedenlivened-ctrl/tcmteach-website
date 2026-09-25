@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Source_Serif_4 } from "next/font/google";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import { site } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -16,11 +17,13 @@ const sourceSerif = Source_Serif_4({
 
 export const metadata: Metadata = {
   title: {
-    default: "The TCM Teach Podcast",
-    template: "%s · The TCM Teach Podcast",
+    default: site.name,
+    template: `%s · ${site.name}`,
   },
-  description:
-    "A podcast for acupuncturists and Traditional Chinese Medicine practitioners: clinical skills, classical theory, and the realities of practice.",
+  description: site.tagline,
+  icons: {
+    icon: "/logo.jpg",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
