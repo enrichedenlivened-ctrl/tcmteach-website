@@ -1,8 +1,10 @@
-import { type Episode, formatDate } from "@/lib/episodes";
+import { type Episode, formatDate, getYoutubeVideoId } from "@/lib/episodes";
 import { site } from "@/lib/site";
+import YoutubeEmbed from "@/components/YoutubeEmbed";
 
 export default function EpisodeCard({ episode }: { episode: Episode }) {
   const date = formatDate(episode.publishedAt);
+  const videoId = episode.youtubeUrl ? getYoutubeVideoId(episode.youtubeUrl) : null;
 
   return (
     <article className="rounded-xl border border-line bg-surface p-5 sm:p-6">
@@ -23,15 +25,7 @@ export default function EpisodeCard({ episode }: { episode: Episode }) {
           </>
         )}
       </div>
-      <h3 className="mt-2 font-serif text-xl font-semibold leading-snug">
-        {episode.audioUrl ? (
-          <a href={episode.audioUrl} className="hover:text-jade-dark">
-            {episode.title}
-          </a>
-        ) : (
-          episode.title
-        )}
-      </h3>
+      <h3 className="mt-2 font-serif text-xl font-semibold leading-snug">{episode.title}</h3>
       {episode.summary && (
         <p className="mt-2 leading-relaxed text-muted">{episode.summary}</p>
       )}
@@ -47,22 +41,24 @@ export default function EpisodeCard({ episode }: { episode: Episode }) {
           ))}
         </ul>
       )}
-      <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+      {videoId && (
+        <div className="mt-4">
+          <YoutubeEmbed videoId={videoId} title={episode.title} />
+        </div>
+      )}
+      {episode.audioUrl && (
+        <audio controls preload="none" className="mt-4 w-full" src={episode.audioUrl}>
+          <a href={episode.audioUrl}>Download this episode</a>
+        </audio>
+      )}
+      {!episode.audioUrl && (
         <a
-          href={episode.audioUrl ?? site.links.libsyn}
-          className="text-sm font-medium text-jade hover:text-jade-dark"
+          href={site.links.libsyn}
+          className="mt-4 inline-block text-sm font-medium text-jade hover:text-jade-dark"
         >
           Listen to this episode →
         </a>
-        {episode.youtubeUrl && (
-          <a
-            href={episode.youtubeUrl}
-            className="text-sm font-medium text-cinnabar hover:opacity-80"
-          >
-            Watch on YouTube →
-          </a>
-        )}
-      </div>
+      )}
     </article>
   );
 }

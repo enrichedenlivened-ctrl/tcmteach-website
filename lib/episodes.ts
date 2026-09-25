@@ -85,3 +85,11 @@ export function formatDate(iso: string) {
     timeZone: "UTC",
   });
 }
+
+export function getYoutubeVideoId(youtubeUrl: string) {
+  try {
+    return new URL(youtubeUrl).searchParams.get("v");
+  } catch {
+    return null;
+  }
+}
