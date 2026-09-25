@@ -22,25 +22,27 @@ export default function AboutPage() {
         </p>
       </div>
 
-      <div className="mt-12 flex flex-col gap-6 sm:flex-row sm:items-start">
+      <div className="mt-12 flex items-center gap-4">
         <Image
           src="/host.webp"
           alt={site.host.name}
           width={200}
           height={200}
-          className="h-28 w-28 shrink-0 rounded-full object-cover"
+          className="h-16 w-16 shrink-0 rounded-full object-cover"
         />
         <div>
           <h2 className="font-serif text-2xl font-semibold">
             {site.host.name}
           </h2>
-          <p className="mt-1 text-sm font-medium uppercase tracking-wide text-cinnabar">
+          <p className="text-sm font-medium uppercase tracking-wide text-cinnabar">
             {site.host.credentials}
           </p>
-          <p className="mt-4 text-lg leading-relaxed text-muted">
-            {site.host.bio}
-          </p>
         </div>
+      </div>
+      <div className="mt-6 space-y-5 text-lg leading-relaxed text-muted">
+        {site.host.bio.map((paragraph) => (
+          <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+        ))}
       </div>
     </div>
   );
