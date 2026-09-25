@@ -61,7 +61,9 @@ async function fetchAllPlaylistItems(useCache: boolean): Promise<PlaylistItem[]>
 }
 
 function matchEpisodeNumber(title: string) {
-  const numberMatch = title.match(/episode\s+(\d+)/i);
+  // Anchored + requires a colon so short-form clips like "Episode 12 dropped
+  // today..." don't get matched over the actual full episode upload.
+  const numberMatch = title.match(/^episode\s+(\d+)\s*:/i);
   return numberMatch ? Number(numberMatch[1]) : null;
 }
 
