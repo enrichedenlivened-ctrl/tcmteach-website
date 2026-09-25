@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { listenLinks, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -21,15 +22,26 @@ export default function AboutPage() {
         </p>
       </div>
 
-      <h2 className="mt-12 font-serif text-2xl font-semibold">
-        {site.host.name}
-      </h2>
-      <p className="mt-1 text-sm font-medium uppercase tracking-wide text-cinnabar">
-        {site.host.credentials}
-      </p>
-      <p className="mt-4 text-lg leading-relaxed text-muted">
-        {site.host.bio}
-      </p>
+      <div className="mt-12 flex flex-col gap-6 sm:flex-row sm:items-start">
+        <Image
+          src="/host.webp"
+          alt={site.host.name}
+          width={200}
+          height={200}
+          className="h-28 w-28 shrink-0 rounded-full object-cover"
+        />
+        <div>
+          <h2 className="font-serif text-2xl font-semibold">
+            {site.host.name}
+          </h2>
+          <p className="mt-1 text-sm font-medium uppercase tracking-wide text-cinnabar">
+            {site.host.credentials}
+          </p>
+          <p className="mt-4 text-lg leading-relaxed text-muted">
+            {site.host.bio}
+          </p>
+        </div>
+      </div>
 
       <h2 className="mt-12 font-serif text-2xl font-semibold">
         Listen &amp; join

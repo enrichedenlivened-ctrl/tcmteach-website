@@ -40,6 +40,12 @@ function parseDurationToMinutes(raw: string | undefined) {
   return Math.round(seconds / 60);
 }
 
+function toIsoDate(pubDate: string | undefined) {
+  if (!pubDate) return "";
+  const date = new Date(pubDate);
+  return Number.isNaN(date.getTime()) ? "" : date.toISOString().slice(0, 10);
+}
+
 function parseFeed(xml: string): Episode[] {
   const items = xml.match(/<item>[\s\S]*?<\/item>/g) ?? [];
 
@@ -71,14 +77,19 @@ function parseFeed(xml: string): Episode[] {
                 .replace(/(^-|-$)/g, ""),
         title: title.replace(/^episode\s+\d+:\s*/i, ""),
         summary: stripHtml(summarySource).slice(0, 400),
-        publishedAt: pubDate ? new Date(pubDate).toISOString().slice(0, 10) : "",
+        publishedAt: toIsoDate(pubDate),
         durationMinutes: parseDurationToMinutes(tag(item, "itunes:duration")),
         topics: [],
         audioUrl,
       };
     })
     .filter((episode): episode is Episode => episode !== null && episode.title.length > 0)
-    .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : -1));
+    .sort((a, b) => {
+      if (a.number > 0 && b.number > 0 && a.number !== b.number) {
+        return b.number - a.number;
+      }
+      return a.publishedAt < b.publishedAt ? 1 : a.publishedAt > b.publishedAt ? -1 : 0;
+    });
 }
 
 export async function getEpisodes(): Promise<{ episodes: Episode[]; isLive: boolean }> {
