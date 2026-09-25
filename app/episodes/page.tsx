@@ -21,7 +21,7 @@ export default async function EpisodesPage() {
       <p className="mt-3 max-w-2xl text-lg text-muted">
         {isLive
           ? "Every episode, newest first, pulled straight from the show's feed."
-          : `${site.episodeCount}+ episodes and counting. Here are a few to start with — browse the full catalog on your favorite app.`}
+          : "Weekly episodes and counting. Here are a few to start with — browse the full catalog on your favorite app."}
       </p>
       <div className="mt-6 flex flex-wrap gap-3">
         {listenLinks.map((link) => (

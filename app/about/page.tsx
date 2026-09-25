@@ -15,14 +15,9 @@ export default function AboutPage() {
       <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted">
         <p>
           {site.name} helps acupuncturists and Chinese medicine herbalists
-          build thriving, sustainable businesses. With {site.episodeCount}+
-          episodes, the show covers what practitioners actually need to grow a
-          practice: marketing, patient attraction, pricing, legal and business
-          structure, branding, and storytelling.
-        </p>
-        <p>
-          Members get deeper resources and community through the TCM Teach
-          membership on Patreon.
+          build thriving, sustainable businesses. Weekly episodes on topics
+          such as marketing, business logistics, legal frameworks, financial
+          tips, and additional revenue drivers utilizing your degree.
         </p>
       </div>
 

@@ -2,7 +2,6 @@ export const site = {
   name: "The TCM Teach Podcast",
   tagline:
     "Helping acupuncturists and Chinese medicine herbalists build thriving, sustainable businesses.",
-  episodeCount: 47,
   host: {
     name: "Matthew Sabey Smith",
     credentials: "DACM, MSOM, Dipl.Ac., LAc.",

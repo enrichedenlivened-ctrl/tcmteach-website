@@ -50,8 +50,9 @@ export default async function Home() {
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
             {site.name}, hosted by {site.host.name}, {site.host.credentials}, is
             the show for practitioners who want their clinic to be a business
-            as strong as their medicine. {site.episodeCount}+ episodes on
-            marketing, patients, and building a practice that lasts.
+            as strong as their medicine. Weekly episodes on topics such as
+            marketing, business logistics, legal frameworks, financial tips,
+            and additional revenue drivers utilizing your degree.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -131,10 +132,6 @@ export default async function Home() {
             <h2 className="font-serif text-2xl font-semibold text-jade-dark">
               Want more? Join the membership.
             </h2>
-            <p className="mt-2 max-w-2xl text-jade-dark/80">
-              The TCM Teach membership on Patreon is where deeper resources
-              and community for growing your practice live.
-            </p>
             <a
               href={site.links.patreon}
               className="mt-6 inline-block rounded-lg bg-jade px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-jade-dark"
