@@ -16,6 +16,11 @@ const sourceSerif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  openGraph: {
+    siteName: site.name,
+    images: ["/logo.jpg"],
+  },
   title: {
     default: site.name,
     template: `%s · ${site.name}`,

@@ -1,5 +1,6 @@
 export const site = {
   name: "The TCM Teach Podcast",
+  url: "https://tcmteach.com",
   tagline:
     "Helping acupuncturists and Chinese medicine herbalists build thriving, sustainable businesses.",
   host: {

@@ -30,6 +30,9 @@ export default function SiteFooter() {
             <Link href="/episodes" className="hover:text-ink">
               Episodes
             </Link>
+            <Link href="/blog" className="hover:text-ink">
+              Blog
+            </Link>
             <Link href="/about" className="hover:text-ink">
               About
             </Link>
